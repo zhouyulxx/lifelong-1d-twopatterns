@@ -1,0 +1,39 @@
+{
+  "dataset": "UCI integer EEG",
+  "protocol": "4 global output class-incremental; A=(1,5), B=(2,4), no task ID",
+  "model": "one learned integer-index-position weight matrix per global class",
+  "mode": "B_only",
+  "seed": 42,
+  "window": 30,
+  "lr": 0.005,
+  "epochs": 20,
+  "batch": 128,
+  "parameter_count": 983044,
+  "stages": [
+    {
+      "stage": "B_only",
+      "trained_on_original_labels": [
+        2,
+        4
+      ],
+      "B_test": {
+        "accuracy": 0.6543478260869565,
+        "per_class_accuracy": {
+          "2": 0.65,
+          "4": 0.658695652173913
+        },
+        "n": 920,
+        "confusion": [
+          [
+            299,
+            161
+          ],
+          [
+            157,
+            303
+          ]
+        ]
+      }
+    }
+  ]
+}

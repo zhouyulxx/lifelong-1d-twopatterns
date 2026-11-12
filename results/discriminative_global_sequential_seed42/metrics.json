@@ -1,0 +1,169 @@
+{
+  "dataset": "UCI integer EEG",
+  "protocol": "4 global output class-incremental; A=(1,5), B=(2,4), no task ID",
+  "model": "one learned integer-index-position weight matrix per global class",
+  "mode": "sequential",
+  "seed": 42,
+  "window": 30,
+  "lr": 0.005,
+  "epochs": 20,
+  "batch": 128,
+  "parameter_count": 983044,
+  "stages": [
+    {
+      "stage": "after_A",
+      "trained_on_original_labels": [
+        1,
+        5
+      ],
+      "seen_test": {
+        "accuracy": 0.9739130434782609,
+        "per_class_accuracy": {
+          "1": 0.9586956521739131,
+          "5": 0.9891304347826086
+        },
+        "n": 920,
+        "confusion": [
+          [
+            441,
+            19
+          ],
+          [
+            5,
+            455
+          ]
+        ]
+      },
+      "A_test": {
+        "accuracy": 0.9739130434782609,
+        "per_class_accuracy": {
+          "1": 0.9586956521739131,
+          "5": 0.9891304347826086
+        },
+        "n": 920,
+        "confusion": [
+          [
+            441,
+            19
+          ],
+          [
+            5,
+            455
+          ]
+        ]
+      }
+    },
+    {
+      "stage": "after_B",
+      "trained_on_original_labels": [
+        2,
+        4
+      ],
+      "seen_test": {
+        "accuracy": 0.33369565217391306,
+        "per_class_accuracy": {
+          "1": 0.0,
+          "5": 0.0,
+          "2": 0.6326086956521739,
+          "4": 0.7021739130434783
+        },
+        "n": 1840,
+        "confusion": [
+          [
+            0,
+            0,
+            419,
+            41
+          ],
+          [
+            0,
+            0,
+            310,
+            150
+          ],
+          [
+            0,
+            0,
+            291,
+            169
+          ],
+          [
+            0,
+            0,
+            137,
+            323
+          ]
+        ]
+      },
+      "A_test": {
+        "accuracy": 0.0,
+        "per_class_accuracy": {
+          "1": 0.0,
+          "5": 0.0
+        },
+        "n": 920,
+        "confusion": [
+          [
+            0,
+            0,
+            419,
+            41
+          ],
+          [
+            0,
+            0,
+            310,
+            150
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "B_test": {
+        "accuracy": 0.6673913043478261,
+        "per_class_accuracy": {
+          "2": 0.6326086956521739,
+          "4": 0.7021739130434783
+        },
+        "n": 920,
+        "confusion": [
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            291,
+            169
+          ],
+          [
+            0,
+            0,
+            137,
+            323
+          ]
+        ]
+      }
+    }
+  ],
+  "forgetting_A_percentage_points": 97.3913043478261
+}

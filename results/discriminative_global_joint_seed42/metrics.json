@@ -1,0 +1,127 @@
+{
+  "dataset": "UCI integer EEG",
+  "protocol": "4 global output class-incremental; A=(1,5), B=(2,4), no task ID",
+  "model": "one learned integer-index-position weight matrix per global class",
+  "mode": "joint",
+  "seed": 42,
+  "window": 30,
+  "lr": 0.005,
+  "epochs": 20,
+  "batch": 128,
+  "parameter_count": 983044,
+  "stages": [
+    {
+      "stage": "joint_AB",
+      "trained_on_original_labels": [
+        1,
+        5,
+        2,
+        4
+      ],
+      "seen_test": {
+        "accuracy": 0.5956521739130435,
+        "per_class_accuracy": {
+          "1": 0.8804347826086957,
+          "5": 0.7630434782608696,
+          "2": 0.22826086956521738,
+          "4": 0.5108695652173914
+        },
+        "n": 1840,
+        "confusion": [
+          [
+            405,
+            0,
+            31,
+            24
+          ],
+          [
+            1,
+            351,
+            48,
+            60
+          ],
+          [
+            42,
+            204,
+            105,
+            109
+          ],
+          [
+            16,
+            164,
+            45,
+            235
+          ]
+        ]
+      },
+      "A_test": {
+        "accuracy": 0.8217391304347826,
+        "per_class_accuracy": {
+          "1": 0.8804347826086957,
+          "5": 0.7630434782608696
+        },
+        "n": 920,
+        "confusion": [
+          [
+            405,
+            0,
+            31,
+            24
+          ],
+          [
+            1,
+            351,
+            48,
+            60
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "B_test": {
+        "accuracy": 0.3695652173913043,
+        "per_class_accuracy": {
+          "2": 0.22826086956521738,
+          "4": 0.5108695652173914
+        },
+        "n": 920,
+        "confusion": [
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            42,
+            204,
+            105,
+            109
+          ],
+          [
+            16,
+            164,
+            45,
+            235
+          ]
+        ]
+      }
+    }
+  ]
+}

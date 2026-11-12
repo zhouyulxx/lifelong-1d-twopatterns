@@ -1,0 +1,255 @@
+{
+  "dataset": "UCI Epileptic Seizure Recognition, original integer samples",
+  "protocol": "one new class per stage; known classes compete globally; no task ID",
+  "learning_objective": "one-class Dirichlet-smoothed index-position log likelihood",
+  "explicit_caveat": "Not the original discriminative cross-entropy method; this is a generative single-class adaptation.",
+  "order": [
+    1,
+    5,
+    2,
+    4,
+    3
+  ],
+  "seed": 43,
+  "window": 30,
+  "alpha": 1.0,
+  "integer_encoding": {
+    "minimum": -4096,
+    "maximum": 4095,
+    "vocabulary_size": 8192,
+    "mapping": "exact integer +4096, NOT quantization"
+  },
+  "geometry": {
+    "spatial_axes": [
+      "integer_id",
+      "y",
+      "z"
+    ],
+    "class_angles_degrees": [
+      0,
+      90,
+      180,
+      270,
+      360
+    ],
+    "class_centers": "(4*window*class_index,4*window*class_index)",
+    "rotated_equivalent_to_independent_storage": true,
+    "overlapping_cells": 0
+  },
+  "stages": [
+    {
+      "stage": 1,
+      "new_class": 1,
+      "seen_classes": [
+        1
+      ],
+      "training_samples_for_new_class": 1840,
+      "global_accuracy": null,
+      "n_seen_test": 460,
+      "per_class_accuracy": null,
+      "confusion": null,
+      "table_parameter_count": 245760,
+      "class_plane_angle_degrees": {
+        "1": 0
+      },
+      "one_class_vs_next_unseen_AUROC_diagnostic": 0.001027882797731569,
+      "one_class_accuracy": "not defined (one seen class)"
+    },
+    {
+      "stage": 2,
+      "new_class": 5,
+      "seen_classes": [
+        1,
+        5
+      ],
+      "training_samples_for_new_class": 1840,
+      "global_accuracy": 0.975,
+      "n_seen_test": 920,
+      "per_class_accuracy": {
+        "1": 0.9543478260869566,
+        "5": 0.9956521739130435
+      },
+      "confusion": [
+        [
+          439,
+          21
+        ],
+        [
+          2,
+          458
+        ]
+      ],
+      "table_parameter_count": 491520,
+      "class_plane_angle_degrees": {
+        "1": 0,
+        "5": 90
+      }
+    },
+    {
+      "stage": 3,
+      "new_class": 2,
+      "seen_classes": [
+        1,
+        5,
+        2
+      ],
+      "training_samples_for_new_class": 1840,
+      "global_accuracy": 0.6760869565217391,
+      "n_seen_test": 1380,
+      "per_class_accuracy": {
+        "1": 0.8521739130434782,
+        "5": 0.8804347826086957,
+        "2": 0.2956521739130435
+      },
+      "confusion": [
+        [
+          392,
+          0,
+          68
+        ],
+        [
+          0,
+          405,
+          55
+        ],
+        [
+          35,
+          289,
+          136
+        ]
+      ],
+      "table_parameter_count": 737280,
+      "class_plane_angle_degrees": {
+        "1": 0,
+        "5": 90,
+        "2": 180
+      }
+    },
+    {
+      "stage": 4,
+      "new_class": 4,
+      "seen_classes": [
+        1,
+        5,
+        2,
+        4
+      ],
+      "training_samples_for_new_class": 1840,
+      "global_accuracy": 0.5657608695652174,
+      "n_seen_test": 1840,
+      "per_class_accuracy": {
+        "1": 0.8347826086956521,
+        "5": 0.7978260869565217,
+        "2": 0.06521739130434782,
+        "4": 0.5652173913043478
+      },
+      "confusion": [
+        [
+          384,
+          0,
+          24,
+          52
+        ],
+        [
+          0,
+          367,
+          6,
+          87
+        ],
+        [
+          33,
+          276,
+          30,
+          121
+        ],
+        [
+          12,
+          173,
+          15,
+          260
+        ]
+      ],
+      "table_parameter_count": 983040,
+      "class_plane_angle_degrees": {
+        "1": 0,
+        "5": 90,
+        "2": 180,
+        "4": 270
+      }
+    },
+    {
+      "stage": 5,
+      "new_class": 3,
+      "seen_classes": [
+        1,
+        5,
+        2,
+        4,
+        3
+      ],
+      "training_samples_for_new_class": 1840,
+      "global_accuracy": 0.46,
+      "n_seen_test": 2300,
+      "per_class_accuracy": {
+        "1": 0.8347826086956521,
+        "5": 0.7847826086956522,
+        "2": 0.05,
+        "4": 0.5369565217391304,
+        "3": 0.09347826086956522
+      },
+      "confusion": [
+        [
+          384,
+          0,
+          24,
+          52,
+          0
+        ],
+        [
+          0,
+          361,
+          2,
+          82,
+          15
+        ],
+        [
+          33,
+          262,
+          23,
+          112,
+          30
+        ],
+        [
+          12,
+          150,
+          4,
+          247,
+          47
+        ],
+        [
+          5,
+          249,
+          20,
+          143,
+          43
+        ]
+      ],
+      "table_parameter_count": 1228800,
+      "class_plane_angle_degrees": {
+        "1": 0,
+        "5": 90,
+        "2": 180,
+        "4": 270,
+        "3": 360
+      }
+    }
+  ],
+  "limits": [
+    "At stage one, accuracy over one seen class is trivially 100% and is not reported.",
+    "No labels are needed at inference, but the current closed-set evaluation excludes unseen classes.",
+    "The AUROC at stage 1 is an OOD discrimination diagnostic using held-out test labels only for evaluation.",
+    "No training on previous classes when fitting a new class.",
+    "Rotation is an exact coordinate permutation: it cannot change predictions without overlap or another shared mechanism.",
+    "The UCI split is segment level; it does not guarantee patient independence."
+  ]
+}
