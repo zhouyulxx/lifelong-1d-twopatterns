@@ -3,6 +3,7 @@ on:
   push:
     paths:
       - ".github/workflows/verify-uci-integer.yml"
+      - "scripts/import_uci_eeg_integer.py"
   workflow_dispatch:
 permissions:
   contents: write
