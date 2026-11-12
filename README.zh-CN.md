@@ -1,3 +1,22 @@
+# 最新实测：四类二维矩阵按 0°/45°/90°/135° 旋转到三维晶格
+
+原生整数 PenDigits，按类别 0→1→2→3 逐个学习，无旧类回放，推理不知道 Task ID。每类一张 `101×16` 生成式 Index–Position 概率矩阵。
+
+| 学完的类别 | 共享 Row 交线 | 45° 旋转但不共享 |
+|---|---:|---:|
+| 0、1 | 96.56% | 96.70% |
+| 0、1、2 | 83.96% | 84.05% |
+| 0、1、2、3 | **85.07%** | **85.91%** |
+
+共享交线版减少 303/6464 = 4.69% 表权重标量，但最终准确率下降 0.84 个百分点；**尚无积极的知识迁移证据**。独立存储与无交叠旋转在预测上严格等价；不要把结果与 Cross-Entropy 判别式基线直接归因于旋转。
+
+- [新实验完整报告](docs/PENDIGITS_45DEGREE_ROTATED_LATTICE_RESULTS_2026-11-12.zh-CN.md)
+- [45° 旋转可运行代码](run_pendigits_45degree_lattice.py)
+- [共享版本实际指标](results/pendigits_45degree_shared_axis/metrics.json)
+- [不共享版本实际指标](results/pendigits_45degree_isolated/metrics.json)
+
+---
+
 # 当前主线：PenDigits 真正的 Class-Incremental Learning（2026-11-12）
 
 已从原生整数 EEG 切换到一个更适合极简 Index–Position Class Table 的公开实验任务：**UCI PenDigits**。每条样本是 8 个按顺序排列的整数坐标对 \((x,y)\)，共 16 个整数值、10 个 Class；使用官方 TRAIN / TEST 划分，不量化、不重新制作 TEST。
