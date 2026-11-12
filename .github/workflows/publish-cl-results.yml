@@ -1,0 +1,45 @@
+name: Publish measured no-task-ID continual-learning results
+on:
+  push:
+    paths:
+      - ".github/workflows/publish-cl-results.yml"
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: read
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Download completed verified run artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh run download 43194677450 -R zhouyulxx/lifelong-1d-twopatterns --name integer-eeg-generative-per-class --dir results
+          gh run download 43194677450 -R zhouyulxx/lifelong-1d-twopatterns --name integer-eeg-global-class-incremental --dir results
+          find results -name metrics.json | sort
+      - name: Validate completeness and published counts
+        run: |
+          python - <<'PY'
+          import glob,json
+          files=glob.glob("results/generative_single_class_seed*/metrics.json")+glob.glob("results/discriminative_global_*/metrics.json")
+          assert len(files)==5,files
+          for p in files:
+              j=json.load(open(p))
+              print(p)
+              if "generative" in p: assert len(j["stages"])==5
+              else: assert len(j["stages"]) in (1,2)
+          PY
+      - name: Persist all five measured metrics into git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f results/generative_single_class_seed*/metrics.json results/discriminative_global_*/metrics.json
+          if git diff --cached --quiet; then echo "Nothing new"; else
+            git commit -m "results: true class-incremental baseline and one-class table experiments"
+            git push origin HEAD:main
+          fi
