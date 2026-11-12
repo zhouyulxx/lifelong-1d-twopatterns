@@ -1,3 +1,21 @@
+# 当前最新：3D 旋转晶格最小实验（2026-11-12）
+
+已完成将每个二分类输出类别的一张二维 **整数 Index–Position Matrix** 放入共同的 **3D 晶格**：
+
+- A 原始朝向：`(v,r,c*(m+1))`
+- B 绕 Row 轴旋转 90°：`(v,0,c*(m+1)+r)`
+- 推理按已知 Task A/B 调用相同朝向，不使用样本真实类别来选择朝向。
+- 已运行共享交线 / 完全隔离两组对照：**A→B→A** 遗忘量分别为 **0.11 pp / 0.00 pp**；Task B 准确率 **65.33% / 65.54%**。
+- **没有证明特征迁移**：本次主要验证空间索引隔离/局部共享和旧知识保留。
+
+- [最新实测报告](docs/ROTATED_LATTICE_RESULTS_2026-11-12.zh-CN.md)
+- [3D 晶格旋转代码](run_rotated_3d_lattice.py)
+- [交线共享结果](results/rotated_lattice_intersection_seed42/metrics.json)
+- [不相交结果](results/rotated_lattice_isolated_seed42/metrics.json)
+- [空间映射规范](docs/3D_ROTATED_LATTICE_SPEC_2026-11-12.zh-CN.md)
+
+---
+
 # 当前实验：原生整数 EEG 序列（2026-11-12）
 
 **已经切换当前主线**：原先的 UCR TwoPatterns 是连续浮点序列，不能直接验证整数 Index–Position Embedding。旧实验和结果保留用于历史对照，但不是新的晶格实验基线。
