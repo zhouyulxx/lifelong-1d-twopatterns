@@ -1,0 +1,94 @@
+{
+  "dataset": "UCI Epileptic Seizure Recognition native integer EEG",
+  "seed": 42,
+  "mode": "isolated",
+  "protocol": "known task orientation, A->B->retest A, binary two-class heads per task",
+  "geometry": {
+    "axes": [
+      "integer_vocabulary",
+      "sequence_position_or_perpendicular_axis",
+      "third_axis"
+    ],
+    "A_class_c": "(v,r,c*(m+1))",
+    "B_class_c": "(v,m,c*(m+1)+r)",
+    "shared_row_positions": 0,
+    "shared_coordinate_count": 0
+  },
+  "epochs_A": 20,
+  "epochs_B": 20,
+  "lr": 0.005,
+  "window": 30,
+  "vocab_size": 3268,
+  "active_spatial_coordinates": 285420,
+  "weight_values_saved_per_coordinate": 1,
+  "parameter_count": 285424,
+  "metrics": {
+    "A": {
+      "A": {
+        "accuracy": 0.9717391304347827,
+        "count": 920,
+        "confusion": [
+          [
+            438,
+            22
+          ],
+          [
+            4,
+            456
+          ]
+        ]
+      },
+      "B": {
+        "accuracy": 0.5,
+        "count": 920,
+        "confusion": [
+          [
+            460,
+            0
+          ],
+          [
+            460,
+            0
+          ]
+        ]
+      }
+    },
+    "B": {
+      "A": {
+        "accuracy": 0.9717391304347827,
+        "count": 920,
+        "confusion": [
+          [
+            438,
+            22
+          ],
+          [
+            4,
+            456
+          ]
+        ]
+      },
+      "B": {
+        "accuracy": 0.6554347826086957,
+        "count": 920,
+        "confusion": [
+          [
+            271,
+            189
+          ],
+          [
+            128,
+            332
+          ]
+        ]
+      }
+    }
+  },
+  "forgetting_A_percentage_points": 0,
+  "limitations": [
+    "Task identity must be supplied to select orientation at inference; never inferred from target label.",
+    "Separate task biases are used so that only genuine lattice intersections can interfere with A.",
+    "3D rotation is a coordinate layout; no new feature-sharing learning algorithm is implied.",
+    "80/20 split is at EEG segment level, not patient level."
+  ]
+}
