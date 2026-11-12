@@ -1,0 +1,95 @@
+{
+  "dataset": "UCR TwoPatterns",
+  "split": "original UCR TRAIN/TEST",
+  "protocol": "same two-output MLP: train A, train B, re-test A; no replay",
+  "original_labels": [
+    "1",
+    "2",
+    "3",
+    "4"
+  ],
+  "task_classes": {
+    "A": [
+      0,
+      1
+    ],
+    "B": [
+      2,
+      3
+    ]
+  },
+  "binary_targets": {
+    "A": "original 0->0, 1->1",
+    "B": "original 2->0, 3->1"
+  },
+  "seed": 42,
+  "epochs_a": 20,
+  "epochs_b": 20,
+  "learning_rate": 0.001,
+  "hidden": 128,
+  "device": "cpu",
+  "results": {
+    "A": {
+      "A": {
+        "accuracy": 0.9433040078201369,
+        "count": 2046,
+        "confusion": [
+          [
+            990,
+            45
+          ],
+          [
+            71,
+            940
+          ]
+        ]
+      },
+      "B": {
+        "accuracy": 0.6719549641760492,
+        "count": 1954,
+        "confusion": [
+          [
+            605,
+            390
+          ],
+          [
+            251,
+            708
+          ]
+        ]
+      }
+    },
+    "B": {
+      "A": {
+        "accuracy": 0.7844574780058651,
+        "count": 2046,
+        "confusion": [
+          [
+            988,
+            47
+          ],
+          [
+            394,
+            617
+          ]
+        ]
+      },
+      "B": {
+        "accuracy": 0.9314227226202662,
+        "count": 1954,
+        "confusion": [
+          [
+            913,
+            82
+          ],
+          [
+            52,
+            907
+          ]
+        ]
+      }
+    }
+  },
+  "forgetting_A_percentage_points": 15.884652981427184,
+  "caveat": "Task-wise binary metric: not four-class class-incremental metric."
+}
