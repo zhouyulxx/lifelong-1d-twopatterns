@@ -1,0 +1,48 @@
+name: One matrix per class baseline A-B-A
+on:
+  push:
+    paths:
+      - ".github/workflows/index-table-baseline.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: |
+          python -m pip install "numpy>=1.26,<3"
+          python -m pip install "torch>=2.2" --index-url https://download.pytorch.org/whl/cpu
+      - name: Train Task A and Task B with class-index tables and re-test A
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p results/one_table_per_class_seed42
+          python run_index_table_binary.py --device cpu --epochs-a 20 --epochs-b 20 --seed 42 --bins 64 --lr 0.01 2>&1 | tee results/one_table_per_class_seed42/train.log
+      - name: Upload checkpoint artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: index-tables-A-B-A-seed42
+          path: results/one_table_per_class_seed42/
+          retention-days: 30
+      - name: Commit measured metrics
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f results/one_table_per_class_seed42/metrics.json results/one_table_per_class_seed42/accuracy_matrix.csv results/one_table_per_class_seed42/loss.csv results/one_table_per_class_seed42/train.log
+          if git diff --cached --quiet; then
+            echo "No metrics changed"
+          else
+            git commit -m "results: evaluate per-class embedding-table A-B-A baseline"
+            git push origin HEAD:main
+          fi
