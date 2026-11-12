@@ -1,0 +1,51 @@
+name: Verify PenDigits class-incremental forgetting across seeds
+on:
+  push:
+    paths:
+      - ".github/workflows/pendigits-seeds.yml"
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install numpy and CPU PyTorch
+        run: |
+          python -m pip install "numpy>=1.26,<3"
+          python -m pip install "torch>=2.2" --index-url https://download.pytorch.org/whl/cpu
+      - name: Seed 43 A->B->A
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p results/pendigits_sequential_seed43
+          python -u run_pendigits_incremental.py --mode sequential --seed 43 --epochs 30 2>&1 | tee results/pendigits_sequential_seed43/train.log
+      - name: Seed 44 A->B->A
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p results/pendigits_sequential_seed44
+          python -u run_pendigits_incremental.py --mode sequential --seed 44 --epochs 30 2>&1 | tee results/pendigits_sequential_seed44/train.log
+      - name: Upload repeat-seed checkpoints
+        uses: actions/upload-artifact@v4
+        with:
+          name: pendigits-class-incremental-seeds43-44
+          path: |
+            results/pendigits_sequential_seed43/
+            results/pendigits_sequential_seed44/
+          retention-days: 30
+      - name: Commit metrics
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f results/pendigits_sequential_seed43/metrics.json results/pendigits_sequential_seed44/metrics.json
+          git commit -m "results: confirm PenDigits A-B forgetting seeds 43 and 44"
+          git pull --rebase origin main
+          git push origin HEAD:main
