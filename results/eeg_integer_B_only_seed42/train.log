@@ -1,0 +1,48 @@
+Task B-only: epoch 1/20, loss=0.68103
+Task B-only: epoch 2/20, loss=0.66737
+Task B-only: epoch 3/20, loss=0.66333
+Task B-only: epoch 4/20, loss=0.66066
+Task B-only: epoch 5/20, loss=0.65888
+Task B-only: epoch 6/20, loss=0.65747
+Task B-only: epoch 7/20, loss=0.65605
+Task B-only: epoch 8/20, loss=0.65557
+Task B-only: epoch 9/20, loss=0.65453
+Task B-only: epoch 10/20, loss=0.65384
+Task B-only: epoch 11/20, loss=0.65346
+Task B-only: epoch 12/20, loss=0.65274
+Task B-only: epoch 13/20, loss=0.65209
+Task B-only: epoch 14/20, loss=0.65274
+Task B-only: epoch 15/20, loss=0.65202
+Task B-only: epoch 16/20, loss=0.65146
+Task B-only: epoch 17/20, loss=0.65103
+Task B-only: epoch 18/20, loss=0.65124
+Task B-only: epoch 19/20, loss=0.65075
+Task B-only: epoch 20/20, loss=0.65056
+B only control {
+  "dataset": "UCI Epileptic Seizure Recognition",
+  "source": "data/eeg_integer/SOURCE.json",
+  "model": "One integer-index-position table per class",
+  "protocol": "Train B only from scratch, no Task A",
+  "task_B_original_classes": [
+    2,
+    4
+  ],
+  "window": 30,
+  "lr": 0.005,
+  "epochs": 20,
+  "seed": 42,
+  "train_count": 3680,
+  "test_count": 920,
+  "test_B_accuracy": 0.65,
+  "test_B_confusion": [
+    [
+      314,
+      146
+    ],
+    [
+      176,
+      284
+    ]
+  ],
+  "vocab_size": 1530
+}

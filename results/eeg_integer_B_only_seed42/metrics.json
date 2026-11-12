@@ -1,0 +1,28 @@
+{
+  "dataset": "UCI Epileptic Seizure Recognition",
+  "source": "data/eeg_integer/SOURCE.json",
+  "model": "One integer-index-position table per class",
+  "protocol": "Train B only from scratch, no Task A",
+  "task_B_original_classes": [
+    2,
+    4
+  ],
+  "window": 30,
+  "lr": 0.005,
+  "epochs": 20,
+  "seed": 42,
+  "train_count": 3680,
+  "test_count": 920,
+  "test_B_accuracy": 0.65,
+  "test_B_confusion": [
+    [
+      314,
+      146
+    ],
+    [
+      176,
+      284
+    ]
+  ],
+  "vocab_size": 1530
+}

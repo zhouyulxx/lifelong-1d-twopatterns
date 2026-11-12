@@ -1,0 +1,94 @@
+{
+  "dataset": "UCI Epileptic Seizure Recognition (integer-valued signals)",
+  "source": "data/eeg_integer/SOURCE.json",
+  "split": "Stratified 80/20 at EEG chunk level; no patient-level grouping",
+  "tasks": {
+    "A": [
+      1,
+      5
+    ],
+    "B": [
+      2,
+      4
+    ]
+  },
+  "protocol": "Task-wise binary A -> B -> re-test A, same 2 output tables, no replay",
+  "method": "One exact integer-index-by-window-position matrix per binary class",
+  "window": 30,
+  "epochs_a": 20,
+  "epochs_b": 20,
+  "lr": 0.005,
+  "seed": 44,
+  "batch_size": 128,
+  "initial_vocabulary_size": 3223,
+  "final_vocabulary_size": 3267,
+  "final_parameter_count": 196022,
+  "metrics": {
+    "A": {
+      "A": {
+        "accuracy": 0.9717391304347827,
+        "n": 920,
+        "confusion": [
+          [
+            435,
+            25
+          ],
+          [
+            1,
+            459
+          ]
+        ],
+        "oov_ratio": 0.00047020029311187103
+      },
+      "B": {
+        "accuracy": 0.47934782608695653,
+        "n": 920,
+        "confusion": [
+          [
+            58,
+            402
+          ],
+          [
+            77,
+            383
+          ]
+        ],
+        "oov_ratio": 0.00019540791402051784
+      }
+    },
+    "B": {
+      "A": {
+        "accuracy": 0.5815217391304348,
+        "n": 920,
+        "confusion": [
+          [
+            417,
+            43
+          ],
+          [
+            342,
+            118
+          ]
+        ],
+        "oov_ratio": 0.00043356130923302396
+      },
+      "B": {
+        "accuracy": 0.6358695652173914,
+        "n": 920,
+        "confusion": [
+          [
+            301,
+            159
+          ],
+          [
+            176,
+            284
+          ]
+        ],
+        "oov_ratio": 0.00017098192476795311
+      }
+    }
+  },
+  "forgetting_A_percentage_points": 39.02173913043478,
+  "notes": "UCI is a published EEG classification dataset. This A/B split is researcher-defined; no clipping, rounding, normalization, or quantization of input signals. Unseen test integers receive zero contribution. EEG segments from the same original recording may occur in train and test; not clinical validation."
+}
