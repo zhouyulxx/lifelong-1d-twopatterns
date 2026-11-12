@@ -1,0 +1,115 @@
+{
+  "dataset": "UCI PenDigits, original integer 16-feature official split",
+  "classes": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "A": [
+    0,
+    1
+  ],
+  "B": [
+    2,
+    3
+  ],
+  "training": "Both models receive A+B labeled data from the beginning",
+  "train_count": 3058,
+  "test_count": 1427,
+  "joint_CE_baseline": {
+    "train_method": "30 epoch Adam lr 0.01, global four-class cross entropy",
+    "accuracy": 0.9201121233356693,
+    "n": 1427,
+    "A_accuracy": 0.8858321870701513,
+    "B_accuracy": 0.9557142857142857,
+    "per_class_accuracy": {
+      "0": 0.9476584022038568,
+      "1": 0.8241758241758241,
+      "2": 0.9395604395604396,
+      "3": 0.9732142857142857
+    },
+    "confusion": [
+      [
+        344,
+        18,
+        1,
+        0
+      ],
+      [
+        0,
+        300,
+        58,
+        6
+      ],
+      [
+        0,
+        20,
+        342,
+        2
+      ],
+      [
+        0,
+        9,
+        0,
+        327
+      ]
+    ]
+  },
+  "joint_single_M_rotated": {
+    "train_method": "single mixed-data pass of positive class integer frequency updates directly into one 3D M",
+    "M_shape": [
+      101,
+      33,
+      17
+    ],
+    "unused_rotation_axis": true,
+    "orientations_degrees": [
+      0,
+      45,
+      90,
+      135
+    ],
+    "accuracy": 0.8591450595655221,
+    "n": 1427,
+    "A_accuracy": 0.7606602475928473,
+    "B_accuracy": 0.9614285714285714,
+    "per_class_accuracy": {
+      "0": 0.9256198347107438,
+      "1": 0.5961538461538461,
+      "2": 0.9505494505494505,
+      "3": 0.9732142857142857
+    },
+    "confusion": [
+      [
+        336,
+        18,
+        9,
+        0
+      ],
+      [
+        0,
+        217,
+        130,
+        17
+      ],
+      [
+        0,
+        14,
+        346,
+        4
+      ],
+      [
+        0,
+        9,
+        0,
+        327
+      ]
+    ]
+  },
+  "joint_CE_minus_joint_M_percentage_points": 6.096706377014716,
+  "joint_M_exactly_matches_one_class_incremental_frequency_method": true,
+  "scientific_caution": "Same split and same four class labels, but different training objectives. No demonstrated rotation-related accuracy gain.",
+  "source_CE_metrics": "results/pendigits_joint_seed42/metrics.json",
+  "source_incremental_M_metrics": "results/pendigits_one_shared_M_dummy_axis/metrics.json"
+}
