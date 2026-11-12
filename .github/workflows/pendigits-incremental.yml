@@ -1,0 +1,72 @@
+name: Verify PenDigits integers and compare one-class versus class-incremental models
+on:
+  push:
+    paths:
+      - ".github/workflows/pendigits-incremental.yml"
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Verify Python syntax
+        run: python -m py_compile scripts/import_uci_pendigits.py run_pendigits_incremental.py
+      - name: Download and validate original UCI integer trajectory data
+        run: python -u scripts/import_uci_pendigits.py
+      - name: Install CPU packages
+        run: |
+          python -m pip install "numpy>=1.26,<3"
+          python -m pip install "torch>=2.2" --index-url https://download.pytorch.org/whl/cpu
+      - name: Generative class-by-class, seed 42
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p results/pendigits_generative_seed42
+          python -u run_pendigits_incremental.py --mode generative --seed 42 2>&1 | tee results/pendigits_generative_seed42/train.log
+      - name: Generative class-by-class, seed 43
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p results/pendigits_generative_seed43
+          python -u run_pendigits_incremental.py --mode generative --seed 43 2>&1 | tee results/pendigits_generative_seed43/train.log
+      - name: Global four-class A then B, no task ID
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p results/pendigits_sequential_seed42
+          python -u run_pendigits_incremental.py --mode sequential --seed 42 --epochs 30 2>&1 | tee results/pendigits_sequential_seed42/train.log
+      - name: B-only capacity control
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p results/pendigits_B_only_seed42
+          python -u run_pendigits_incremental.py --mode B_only --seed 42 --epochs 30 2>&1 | tee results/pendigits_B_only_seed42/train.log
+      - name: Joint A+B oracle control
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p results/pendigits_joint_seed42
+          python -u run_pendigits_incremental.py --mode joint --seed 42 --epochs 30 2>&1 | tee results/pendigits_joint_seed42/train.log
+      - name: Upload raw output checkpoints and learned matrices
+        uses: actions/upload-artifact@v4
+        with:
+          name: native-integer-pendigits-single-class-incremental
+          path: results/pendigits_*/
+          retention-days: 30
+      - name: Commit source checksums and metrics
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f data/pendigits/SOURCE.json data/pendigits/pendigits.tra.gz data/pendigits/pendigits.tes.gz
+          git add -f results/pendigits_*/metrics.json
+          git commit -m "results: verified PenDigits native integer continual-learning benchmarks"
+          git pull --rebase origin main
+          git push origin HEAD:main
