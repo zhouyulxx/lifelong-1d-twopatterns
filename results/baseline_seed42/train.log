@@ -1,0 +1,52 @@
+Train counts: {'A': 508, 'B': 492}
+Test counts: {'A': 2046, 'B': 1954}
+
+=== Training A: classes (0, 1) ===
+Task A: epoch 1/20: loss=1.16561
+Task A: epoch 2/20: loss=0.80592
+Task A: epoch 3/20: loss=0.62838
+Task A: epoch 4/20: loss=0.52961
+Task A: epoch 5/20: loss=0.43261
+Task A: epoch 6/20: loss=0.32705
+Task A: epoch 7/20: loss=0.22915
+Task A: epoch 8/20: loss=0.15508
+Task A: epoch 9/20: loss=0.10147
+Task A: epoch 10/20: loss=0.06646
+Task A: epoch 11/20: loss=0.04366
+Task A: epoch 12/20: loss=0.03092
+Task A: epoch 13/20: loss=0.02095
+Task A: epoch 14/20: loss=0.01507
+Task A: epoch 15/20: loss=0.01122
+Task A: epoch 16/20: loss=0.00854
+Task A: epoch 17/20: loss=0.00684
+Task A: epoch 18/20: loss=0.00554
+Task A: epoch 19/20: loss=0.00467
+Task A: epoch 20/20: loss=0.00399
+After A -> test A: global=0.9365; task-aware diagnostic=0.9365
+After A -> test B: global=0.0000; task-aware diagnostic=0.3849
+
+=== Training B: classes (2, 3) ===
+Task B: epoch 1/20: loss=7.01820
+Task B: epoch 2/20: loss=3.56809
+Task B: epoch 3/20: loss=1.90458
+Task B: epoch 4/20: loss=1.20019
+Task B: epoch 5/20: loss=0.88051
+Task B: epoch 6/20: loss=0.74229
+Task B: epoch 7/20: loss=0.67518
+Task B: epoch 8/20: loss=0.63532
+Task B: epoch 9/20: loss=0.59386
+Task B: epoch 10/20: loss=0.54779
+Task B: epoch 11/20: loss=0.48973
+Task B: epoch 12/20: loss=0.41792
+Task B: epoch 13/20: loss=0.33849
+Task B: epoch 14/20: loss=0.26144
+Task B: epoch 15/20: loss=0.19959
+Task B: epoch 16/20: loss=0.15343
+Task B: epoch 17/20: loss=0.11579
+Task B: epoch 18/20: loss=0.08862
+Task B: epoch 19/20: loss=0.06975
+Task B: epoch 20/20: loss=0.05118
+After B -> test A: global=0.0000; task-aware diagnostic=0.7263
+After B -> test B: global=0.9406; task-aware diagnostic=0.9406
+
+Forgetting A: 0.9365. Results saved in results/baseline_seed42

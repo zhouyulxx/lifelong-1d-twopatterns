@@ -1,0 +1,68 @@
+{
+  "dataset": "UCR TwoPatterns",
+  "split": "original UCR TRAIN/TEST",
+  "tasks": {
+    "A": [
+      0,
+      1
+    ],
+    "B": [
+      2,
+      3
+    ]
+  },
+  "original_label_order": [
+    "1",
+    "2",
+    "3",
+    "4"
+  ],
+  "protocol": "class-incremental A then B, four global outputs, no task ID",
+  "replay": false,
+  "preprocessing": "per-series z-normalization",
+  "seed": 42,
+  "parameters": {
+    "epochs_a": 20,
+    "epochs_b": 20,
+    "lr": 0.001,
+    "batch_size": 64,
+    "hidden_dim": 128,
+    "device": "cpu"
+  },
+  "train_counts": {
+    "A": 508,
+    "B": 492
+  },
+  "test_counts": {
+    "A": 2046,
+    "B": 1954
+  },
+  "stage_metrics": {
+    "A": {
+      "A": {
+        "global_accuracy": 0.9364613880742912,
+        "task_aware_accuracy_diagnostic": 0.9364613880742912,
+        "n_test": 2046
+      },
+      "B": {
+        "global_accuracy": 0.0,
+        "task_aware_accuracy_diagnostic": 0.38485158648925283,
+        "n_test": 1954
+      }
+    },
+    "B": {
+      "A": {
+        "global_accuracy": 0.0,
+        "task_aware_accuracy_diagnostic": 0.7262952101661779,
+        "n_test": 2046
+      },
+      "B": {
+        "global_accuracy": 0.9406345957011258,
+        "task_aware_accuracy_diagnostic": 0.9406345957011258,
+        "n_test": 1954
+      }
+    }
+  },
+  "forgetting_A_global": 0.9364613880742912,
+  "note": "Task-aware scores are DIAGNOSTIC only; not a reproduction of prior published figures."
+}
