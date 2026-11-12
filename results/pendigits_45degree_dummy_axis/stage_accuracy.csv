@@ -1,0 +1,5 @@
+n_classes,mode,accuracy,scalar_count
+1,dummy_axis,None,1616
+2,dummy_axis,0.9669876203576341,3232
+3,dummy_axis,0.84051329055912,4848
+4,dummy_axis,0.8591450595655221,6464
