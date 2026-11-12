@@ -1,0 +1,56 @@
+name: Native integer EEG A-B-A class-matrix baseline
+on:
+  push:
+    paths:
+      - ".github/workflows/eeg-integer-table-baseline.yml"
+      - "run_integer_eeg_tables.py"
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  train:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install CPU dependencies
+        run: |
+          python -m pip install "numpy>=1.26,<3"
+          python -m pip install "torch>=2.2" --index-url https://download.pytorch.org/whl/cpu
+      - name: Validate raw integer sequence dataset
+        run: |
+          python - <<'PY'
+          from run_integer_eeg_tables import load_integer_eeg
+          import numpy as np
+          x,y=load_integer_eeg()
+          assert x.dtype.kind in 'iu'
+          assert x.shape==(11500,178)
+          assert np.isin(y,[1,2,3,4,5]).all()
+          print('Raw integer EEG validated',x.shape,int(x.min()),int(x.max()))
+          PY
+      - name: Train A, then B, then re-test A (no replay or binning)
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p results/eeg_integer_table_seed42
+          python -u run_integer_eeg_tables.py --device cpu --seed 42 --epochs-a 20 --epochs-b 20 --window 30 --lr 0.005 --batch 128 2>&1 | tee results/eeg_integer_table_seed42/train.log
+      - name: Upload trained weight checkpoints
+        uses: actions/upload-artifact@v4
+        with:
+          name: eeg-native-integer-table-A-B-A-seed42
+          path: results/eeg_integer_table_seed42/
+          retention-days: 30
+      - name: Commit verified experimental metrics
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f results/eeg_integer_table_seed42/metrics.json results/eeg_integer_table_seed42/accuracy_matrix.csv results/eeg_integer_table_seed42/train_history.csv results/eeg_integer_table_seed42/train.log
+          if git diff --cached --quiet; then echo "Results unchanged"; else
+            git commit -m "results: native EEG integer table A-B-A measured baseline"
+            git push origin HEAD:main
+          fi
