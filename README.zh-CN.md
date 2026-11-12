@@ -1,4 +1,21 @@
-# Lifelong Learning：UCR TwoPatterns 一维序列最小基线
+# 当前实验：原生整数 EEG 序列（2026-11-12）
+
+**已经切换当前主线**：原先的 UCR TwoPatterns 是连续浮点序列，不能直接验证整数 Index–Position Embedding。旧实验和结果保留用于历史对照，但不是新的晶格实验基线。
+
+新数据：UCI Epileptic Seizure Recognition，11,500 条、每条 178 个原生整数数值、五类；已逐项验证 2,047,000 个值均为整数，原 CSV gzip 无损保存于 `data/eeg_integer/data.csv.gz`。
+
+新模型：**每个输出类只有一张二维 Index–Position 矩阵（窗口 30）**，两个类别共两张矩阵，没有额外 MLP 或 Linear Head。先训练任务 A，再训练 B，最后测试 A。
+
+**三个种子实测：A 平均从 96.88% 降至 59.82%，遗忘 37.07 个百分点。** B 的平均准确率 65.98%；B-only 对照为 65.00%，因此 B 本身对当前极简模型较难。
+
+- [完整中文基线报告](docs/INTEGER_EEG_TABLE_BASELINE_2026-11-12.zh-CN.md)
+- [整数版训练脚本](run_integer_eeg_tables.py)
+- [原生整数数据来源与校验](data/eeg_integer/SOURCE.json)
+- [Seed 42 实测结果](results/eeg_integer_table_seed42/metrics.json)
+
+---
+## 历史实验：UCR TwoPatterns（连续浮点输入，不适用于原生整数模型）
+
 
 > 目标：先验证普通神经网络在 **Task A → Task B** 顺序训练时，旧任务 A 的准确率是否下降。此阶段没有实现四维晶格。
 
