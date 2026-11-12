@@ -1,0 +1,5 @@
+n_classes,mode,accuracy,scalar_count
+1,shared_axis,None,1616
+2,shared_axis,0.9656121045392022,3131
+3,shared_axis,0.8395967002749771,4646
+4,shared_axis,0.8507358093903293,6161

@@ -1,0 +1,170 @@
+{
+  "dataset": "UCI PenDigits; official train/test; native integer 0-100",
+  "model": "one positive-only learned 101x16 index-position log likelihood table per class",
+  "mode": "shared_axis",
+  "class_order": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "rotation_angles_degrees": [
+    0,
+    45,
+    90,
+    135
+  ],
+  "row_axis": "integer token index v",
+  "column_axis": "position r",
+  "geometry": "(v,r*dy_c,r*dz_c) for shared_axis; isolated also adds (4*L*c,4*L*c) origin",
+  "direction_vectors": [
+    [
+      1,
+      0
+    ],
+    [
+      1,
+      1
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      -1,
+      1
+    ]
+  ],
+  "logp_smoothing_alpha": 1.0,
+  "scores": "sum of 16 position-specific class log probabilities; global argmax; no task ID",
+  "overlap_semantics": "last newly learned class overwrites shared r=0 axis cells only",
+  "shared_cells_across_classes": 303,
+  "unique_active_spatial_cells": 6161,
+  "all_stages": [
+    {
+      "learned_class": 0,
+      "angle_degrees": 0,
+      "seen_classes": [
+        0
+      ],
+      "new_training_samples": 780,
+      "tested_samples": 363,
+      "all_seen_class_accuracy": null,
+      "per_class_accuracy": null,
+      "confusion": null,
+      "lattice_scalar_count": 1616,
+      "new_class_cells_overwriting_old_cells": 0
+    },
+    {
+      "learned_class": 1,
+      "angle_degrees": 45,
+      "seen_classes": [
+        0,
+        1
+      ],
+      "new_training_samples": 779,
+      "tested_samples": 727,
+      "all_seen_class_accuracy": 0.9656121045392022,
+      "per_class_accuracy": {
+        "0": 0.931129476584022,
+        "1": 1.0
+      },
+      "confusion": [
+        [
+          338,
+          25
+        ],
+        [
+          0,
+          364
+        ]
+      ],
+      "lattice_scalar_count": 3131,
+      "new_class_cells_overwriting_old_cells": 101
+    },
+    {
+      "learned_class": 2,
+      "angle_degrees": 90,
+      "seen_classes": [
+        0,
+        1,
+        2
+      ],
+      "new_training_samples": 780,
+      "tested_samples": 1091,
+      "all_seen_class_accuracy": 0.8395967002749771,
+      "per_class_accuracy": {
+        "0": 0.9228650137741047,
+        "1": 0.6318681318681318,
+        "2": 0.9642857142857143
+      },
+      "confusion": [
+        [
+          335,
+          15,
+          13
+        ],
+        [
+          0,
+          230,
+          134
+        ],
+        [
+          0,
+          13,
+          351
+        ]
+      ],
+      "lattice_scalar_count": 4646,
+      "new_class_cells_overwriting_old_cells": 101
+    },
+    {
+      "learned_class": 3,
+      "angle_degrees": 135,
+      "seen_classes": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "new_training_samples": 719,
+      "tested_samples": 1427,
+      "all_seen_class_accuracy": 0.8507358093903293,
+      "per_class_accuracy": {
+        "0": 0.9228650137741047,
+        "1": 0.5604395604395604,
+        "2": 0.9532967032967034,
+        "3": 0.9761904761904762
+      },
+      "confusion": [
+        [
+          335,
+          15,
+          13,
+          0
+        ],
+        [
+          0,
+          204,
+          133,
+          27
+        ],
+        [
+          0,
+          11,
+          347,
+          6
+        ],
+        [
+          0,
+          8,
+          0,
+          328
+        ]
+      ],
+      "lattice_scalar_count": 6161,
+      "new_class_cells_overwriting_old_cells": 101
+    }
+  ],
+  "caveat": "Different from original cross-entropy discriminative baseline. Rotation alone cannot prove transfer."
+}
