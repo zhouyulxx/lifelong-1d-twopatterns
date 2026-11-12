@@ -1,0 +1,174 @@
+{
+  "dataset": "UCI PenDigits native integer data, original split",
+  "architecture": "Exactly one fixed 3D storage M[v,y,z]; no class matrix copies",
+  "storage_dtype": "int32 counters; log-probability weights computed from M on demand",
+  "shape_M": [
+    101,
+    33,
+    17
+  ],
+  "physical_total_allocated_scalar_cells": 56661,
+  "used_weight_coordinates": 6464,
+  "unused_rotation_axis": "M[:,16,0] all zero; effective position r stored at r+1",
+  "angles_deg": [
+    0,
+    45,
+    90,
+    135
+  ],
+  "directions_yz": [
+    [
+      1,
+      0
+    ],
+    [
+      1,
+      1
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      -1,
+      1
+    ]
+  ],
+  "learning": "positive-only incremental count update DIRECTLY into M at rotated coordinates",
+  "prediction": "global argmax of all learned direction log-probabilities; task unknown",
+  "per_class_count_metadata": {
+    "0": 780,
+    "1": 779,
+    "2": 780,
+    "3": 719
+  },
+  "smoothing_alpha": 1.0,
+  "extra_parameters_per_new_class": "Only new directions' previously unused lattice cells; class count & angle are metadata",
+  "all_old_weight_slices_unchanged": true,
+  "equal_independent_probability_table_baseline": true,
+  "stages": [
+    {
+      "learned": [
+        0
+      ],
+      "class_just_learned": 0,
+      "angle_degrees": 0,
+      "training_samples": 780,
+      "test_samples_seen": 363,
+      "global_accuracy": null,
+      "old_weights_preserved_exactly": true,
+      "confusion": null,
+      "class_accuracy": null
+    },
+    {
+      "learned": [
+        0,
+        1
+      ],
+      "class_just_learned": 1,
+      "angle_degrees": 45,
+      "training_samples": 779,
+      "test_samples_seen": 727,
+      "global_accuracy": 0.9669876203576341,
+      "old_weights_preserved_exactly": true,
+      "confusion": [
+        [
+          339,
+          24
+        ],
+        [
+          0,
+          364
+        ]
+      ],
+      "class_accuracy": {
+        "0": 0.9338842975206612,
+        "1": 1.0
+      }
+    },
+    {
+      "learned": [
+        0,
+        1,
+        2
+      ],
+      "class_just_learned": 2,
+      "angle_degrees": 90,
+      "training_samples": 780,
+      "test_samples_seen": 1091,
+      "global_accuracy": 0.84051329055912,
+      "old_weights_preserved_exactly": true,
+      "confusion": [
+        [
+          336,
+          18,
+          9
+        ],
+        [
+          0,
+          232,
+          132
+        ],
+        [
+          0,
+          15,
+          349
+        ]
+      ],
+      "class_accuracy": {
+        "0": 0.9256198347107438,
+        "1": 0.6373626373626373,
+        "2": 0.9587912087912088
+      }
+    },
+    {
+      "learned": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "class_just_learned": 3,
+      "angle_degrees": 135,
+      "training_samples": 719,
+      "test_samples_seen": 1427,
+      "global_accuracy": 0.8591450595655221,
+      "old_weights_preserved_exactly": true,
+      "confusion": [
+        [
+          336,
+          18,
+          9,
+          0
+        ],
+        [
+          0,
+          217,
+          130,
+          17
+        ],
+        [
+          0,
+          14,
+          346,
+          4
+        ],
+        [
+          0,
+          9,
+          0,
+          327
+        ]
+      ],
+      "class_accuracy": {
+        "0": 0.9256198347107438,
+        "1": 0.5961538461538461,
+        "2": 0.9505494505494505,
+        "3": 0.9732142857142857
+      },
+      "A_accuracy_after_B": 0.7606602475928473,
+      "B_accuracy_after_B": 0.9614285714285714
+    }
+  ],
+  "scope": "4-class PenDigits; generative index-position objective, NOT discriminative CE objective"
+}
