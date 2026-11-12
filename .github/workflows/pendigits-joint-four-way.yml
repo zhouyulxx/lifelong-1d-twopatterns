@@ -1,0 +1,43 @@
+name: PenDigits A+B jointly trained four-class models comparison
+on:
+  push:
+    paths:
+      - ".github/workflows/pendigits-joint-four-way.yml"
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  joint_four_class:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Set up NumPy
+        run: |
+          python -m pip install "numpy>=1.26,<3"
+          python -m py_compile run_pendigits_joint_four_class_comparison.py run_pendigits_single_M_direct.py
+      - name: Jointly learn one M from shuffled four-class PenDigits data
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p results/pendigits_joint_four_class_comparison
+          python -u run_pendigits_joint_four_class_comparison.py 2>&1 | tee results/pendigits_joint_four_class_comparison/run.log
+      - name: Publish experiment artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: pendigits-joint-four-class-CE-vs-single-M
+          path: results/pendigits_joint_four_class_comparison/
+          retention-days: 30
+      - name: Commit measured results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f results/pendigits_joint_four_class_comparison/metrics.json
+          git commit -m "results: joint A+B four-class baseline comparison CE vs single M"
+          git pull --rebase origin main
+          git push origin HEAD:main
