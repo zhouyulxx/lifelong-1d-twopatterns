@@ -1,0 +1,141 @@
+{
+  "dataset": "UCI PenDigits original writer-disjoint train/test",
+  "protocol": "2-class stage A (digits 0/1), stage B (2/3); global output evaluation",
+  "model": "one trainable 101x16 matrix per output class, no hidden layers",
+  "mode": "sequential",
+  "seed": 44,
+  "epochs": 30,
+  "lr": 0.01,
+  "num_parameters": 6468,
+  "stages": [
+    {
+      "stage": "after_A",
+      "A": {
+        "accuracy": 0.9711141678129298,
+        "n": 727,
+        "per_class_accuracy": {
+          "0": 0.9421487603305785,
+          "1": 1.0
+        },
+        "confusion": [
+          [
+            342,
+            21
+          ],
+          [
+            0,
+            364
+          ]
+        ]
+      }
+    },
+    {
+      "stage": "after_B",
+      "A": {
+        "accuracy": 0.11141678129298486,
+        "n": 727,
+        "per_class_accuracy": {
+          "0": 0.2231404958677686,
+          "1": 0.0
+        },
+        "confusion": [
+          [
+            81,
+            0,
+            47,
+            235
+          ],
+          [
+            0,
+            0,
+            245,
+            119
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "B": {
+        "accuracy": 0.9957142857142857,
+        "n": 700,
+        "per_class_accuracy": {
+          "2": 0.9917582417582418,
+          "3": 1.0
+        },
+        "confusion": [
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            361,
+            3
+          ],
+          [
+            0,
+            0,
+            0,
+            336
+          ]
+        ]
+      },
+      "global_AB": {
+        "accuracy": 0.5451997196916608,
+        "n": 1427,
+        "per_class_accuracy": {
+          "0": 0.2231404958677686,
+          "1": 0.0,
+          "2": 0.9917582417582418,
+          "3": 1.0
+        },
+        "confusion": [
+          [
+            81,
+            0,
+            47,
+            235
+          ],
+          [
+            0,
+            0,
+            245,
+            119
+          ],
+          [
+            0,
+            0,
+            361,
+            3
+          ],
+          [
+            0,
+            0,
+            0,
+            336
+          ]
+        ]
+      }
+    }
+  ],
+  "forgetting_A_percentage_points": 85.9697386519945
+}
