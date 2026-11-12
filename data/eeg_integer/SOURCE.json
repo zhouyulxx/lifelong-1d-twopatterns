@@ -1,0 +1,24 @@
+{
+  "dataset": "UCI Epileptic Seizure Recognition (id 388)",
+  "source": "https://raw.githubusercontent.com/marakaspers/seizure-prediction/master/Epileptic_Seizure_Recognition.csv",
+  "original_catalog": "https://archive.ics.uci.edu/dataset/388/epileptic+seizure+recognition",
+  "source_is_public_mirror": true,
+  "sha256": "5ac55c71de5df20d2f47c39300c5b61df18ac5d1c40315e586310b794c32a98b",
+  "source_format": "CSV with X1..X178 signals and y labels",
+  "n_sequences": 11500,
+  "sequence_length": 178,
+  "class_counts": {
+    "1": 2300,
+    "2": 2300,
+    "3": 2300,
+    "4": 2300,
+    "5": 2300
+  },
+  "value_min": "-1885",
+  "value_max": "2047",
+  "fractional_value_count": 0,
+  "fractional_examples": [],
+  "all_input_signal_values_integer": true,
+  "source_is_preprocessed_EEG": true,
+  "claim": "integer-valued source samples only if all_input_signal_values_integer is true"
+}
