@@ -1,0 +1,14 @@
+{
+  "dataset": "UCR TwoPatterns",
+  "source_url": "https://www.timeseriesclassification.com/aeon-toolkit/TwoPatterns.zip",
+  "original_split": true,
+  "length": 128,
+  "classes": 4,
+  "train_count": 1000,
+  "test_count": 4000,
+  "sha256": {
+    "TwoPatterns_TRAIN.ts": "151261f566de950a2dfcd6f03bbd0e2672786ce61b3022984b9342fed64b6d39",
+    "TwoPatterns_TEST.ts": "07ff80b04472c03300c5758227ab017926391379693afc69723573e8cb5e3275"
+  },
+  "note": "Official original sequences, NOT generated/simulated by this repository."
+}
