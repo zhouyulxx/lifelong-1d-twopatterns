@@ -144,3 +144,18 @@ GitHub Actions 记录：https://github.com/zhouyulxx/lifelong-1d-twopatterns/act
 2. 选择更简单的 4-class A/B 作为晶格机制初期试验，但保留 10-class 全流程用于扩展性测试。
 3. 同一学习目标下比较 3D 平行隔离、旋转隔离和受控交点共享，明确对 A retention、B learning 和存储量的影响。
 4. 研究**从 A 的单类别表中抽取可共享信息，而不改写 A 对其自身的类别得分**，防止新类竞争导致旧类混淆。
+
+## 追加核验：三个随机种子的全局四分类遗忘（2026-11-12）
+
+复核了标准判别式 A={0,1}→B={2,3} 无 replay，全局四类输出的三个随机初始化：
+
+| Seed | A 学完测 A | B 学完再测 A | B 学完测 B | A 遗忘 (pp) |
+|---|---:|---:|---:|---:|
+| 42 | 97.25% | 11.28% | 99.57% | 85.97 |
+| 43 | 97.25% | 13.07% | 99.43% | 84.18 |
+| 44 | 97.11% | 11.14% | 99.57% | 85.97 |
+| **平均** | **97.20%** | **11.83%** | **99.52%** | **85.37** |
+
+三个种子都出现强烈旧类遗忘，而 B 始终学得很好。样本划分沿用官方固定 TRAIN/TEST，所以种子变化仅来自网络参数初始化、batch shuffle 等随机训练过程。完整机器生成数值见 `results/pendigits_sequential_seed42/metrics.json`、`results/pendigits_sequential_seed43/metrics.json`、`results/pendigits_sequential_seed44/metrics.json`。
+
+GitHub Actions：https://github.com/zhouyulxx/lifelong-1d-twopatterns/actions/runs/43196301376
