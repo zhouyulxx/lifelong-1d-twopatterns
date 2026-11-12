@@ -1,0 +1,197 @@
+{
+  "dataset": "UCI Pen-Based Recognition of Handwritten Digits (official writer-disjoint train/test)",
+  "native_input": "8 ordered pen XY points, flattened to 16 integer coordinates",
+  "protocol": "one new class at each stage, global argmax, unknown task, no replay",
+  "model": "one 101x16 2D index-position log likelihood table per class",
+  "learned_objective": "positive-only smoothed per-value-per-position log probability",
+  "stage1": "one-class closed-set accuracy undefined; OOD AUROC diagnostic only",
+  "order": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "alpha": 1.0,
+  "rotation_rule": "90-degree turns about integer-index axis; spatially translated class centers",
+  "rotated_lattice_exactly_matches_independent_class_tables": true,
+  "geometry_overlapping_weights": 0,
+  "seed": 43,
+  "stages": [
+    {
+      "class": 0,
+      "n_train": 780,
+      "n_test_seen": 363,
+      "accuracy": null,
+      "per_class_accuracy": null,
+      "total_table_cells": 1616,
+      "class_plane_orientation_deg": 0,
+      "single_class_test_accuracy_defined": false,
+      "first_class_vs_class_1_OOD_AUROC": 0.9524263615172706
+    },
+    {
+      "class": 1,
+      "n_train": 779,
+      "n_test_seen": 727,
+      "accuracy": 0.9669876203576341,
+      "per_class_accuracy": {
+        "0": 0.9338842975206612,
+        "1": 1.0
+      },
+      "total_table_cells": 3232,
+      "class_plane_orientation_deg": 90,
+      "single_class_test_accuracy_defined": true
+    },
+    {
+      "class": 2,
+      "n_train": 780,
+      "n_test_seen": 1091,
+      "accuracy": 0.84051329055912,
+      "per_class_accuracy": {
+        "0": 0.9256198347107438,
+        "1": 0.6373626373626373,
+        "2": 0.9587912087912088
+      },
+      "total_table_cells": 4848,
+      "class_plane_orientation_deg": 180,
+      "single_class_test_accuracy_defined": true
+    },
+    {
+      "class": 3,
+      "n_train": 719,
+      "n_test_seen": 1427,
+      "accuracy": 0.8591450595655221,
+      "per_class_accuracy": {
+        "0": 0.9256198347107438,
+        "1": 0.5961538461538461,
+        "2": 0.9505494505494505,
+        "3": 0.9732142857142857
+      },
+      "total_table_cells": 6464,
+      "class_plane_orientation_deg": 270,
+      "single_class_test_accuracy_defined": true
+    },
+    {
+      "class": 4,
+      "n_train": 780,
+      "n_test_seen": 1791,
+      "accuracy": 0.8816303740926856,
+      "per_class_accuracy": {
+        "0": 0.9118457300275482,
+        "1": 0.5906593406593407,
+        "2": 0.9505494505494505,
+        "3": 0.9732142857142857,
+        "4": 0.989010989010989
+      },
+      "total_table_cells": 8080,
+      "class_plane_orientation_deg": 0,
+      "single_class_test_accuracy_defined": true
+    },
+    {
+      "class": 5,
+      "n_train": 720,
+      "n_test_seen": 2126,
+      "accuracy": 0.8377234242709313,
+      "per_class_accuracy": {
+        "0": 0.90633608815427,
+        "1": 0.5192307692307693,
+        "2": 0.9478021978021978,
+        "3": 0.9732142857142857,
+        "4": 0.9862637362637363,
+        "5": 0.6925373134328359
+      },
+      "total_table_cells": 9696,
+      "class_plane_orientation_deg": 90,
+      "single_class_test_accuracy_defined": true
+    },
+    {
+      "class": 6,
+      "n_train": 720,
+      "n_test_seen": 2462,
+      "accuracy": 0.8411860276198213,
+      "per_class_accuracy": {
+        "0": 0.8429752066115702,
+        "1": 0.5192307692307693,
+        "2": 0.9478021978021978,
+        "3": 0.9732142857142857,
+        "4": 0.9560439560439561,
+        "5": 0.6746268656716418,
+        "6": 0.9821428571428571
+      },
+      "total_table_cells": 11312,
+      "class_plane_orientation_deg": 180,
+      "single_class_test_accuracy_defined": true
+    },
+    {
+      "class": 7,
+      "n_train": 778,
+      "n_test_seen": 2826,
+      "accuracy": 0.8361641896673744,
+      "per_class_accuracy": {
+        "0": 0.8429752066115702,
+        "1": 0.5192307692307693,
+        "2": 0.9478021978021978,
+        "3": 0.9732142857142857,
+        "4": 0.9560439560439561,
+        "5": 0.6716417910447762,
+        "6": 0.9791666666666666,
+        "7": 0.8076923076923077
+      },
+      "total_table_cells": 12928,
+      "class_plane_orientation_deg": 270,
+      "single_class_test_accuracy_defined": true
+    },
+    {
+      "class": 8,
+      "n_train": 719,
+      "n_test_seen": 3162,
+      "accuracy": 0.8371283997469956,
+      "per_class_accuracy": {
+        "0": 0.8236914600550964,
+        "1": 0.5192307692307693,
+        "2": 0.9478021978021978,
+        "3": 0.9732142857142857,
+        "4": 0.9560439560439561,
+        "5": 0.6507462686567164,
+        "6": 0.9672619047619048,
+        "7": 0.7994505494505495,
+        "8": 0.9077380952380952
+      },
+      "total_table_cells": 14544,
+      "class_plane_orientation_deg": 0,
+      "single_class_test_accuracy_defined": true
+    },
+    {
+      "class": 9,
+      "n_train": 719,
+      "n_test_seen": 3498,
+      "accuracy": 0.8244711263579189,
+      "per_class_accuracy": {
+        "0": 0.8236914600550964,
+        "1": 0.49725274725274726,
+        "2": 0.9478021978021978,
+        "3": 0.9583333333333334,
+        "4": 0.9395604395604396,
+        "5": 0.5014925373134328,
+        "6": 0.9642857142857143,
+        "7": 0.7994505494505495,
+        "8": 0.9077380952380952,
+        "9": 0.9136904761904762
+      },
+      "total_table_cells": 16160,
+      "class_plane_orientation_deg": 90,
+      "single_class_test_accuracy_defined": true
+    }
+  ],
+  "caveats": [
+    "Exact integers, not binned values.",
+    "Alternating X/Y channels, not a single-channel sensor time series.",
+    "Generative density may fail for classes with different entropy even when old matrices remain frozen.",
+    "Rotation with isolated spatial addresses is a re-indexing; it does not establish transfer or superior learning."
+  ]
+}

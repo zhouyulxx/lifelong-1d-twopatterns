@@ -1,0 +1,49 @@
+{
+  "dataset": "UCI Pen-Based Recognition of Handwritten Digits (ID 81)",
+  "official_source": "https://archive.ics.uci.edu/static/public/81/pen+based+recognition+of+handwritten+digits.zip",
+  "original_zip_sha256": "1e02bea023613c2b11c9492f6f34caf975420455934f3527d270cee9a1f03b64",
+  "has_native_integer_values": true,
+  "feature_details": "16 ordered integers; 8 (x,y) pen-trajectory points, alternating channels",
+  "feature_value_range": [
+    0,
+    100
+  ],
+  "label_range": [
+    0,
+    9
+  ],
+  "splits": {
+    "pendigits.tra": {
+      "n": 7494,
+      "sha256": "e2b9eb9f0d0467e2b64a4816a3420edf2b8043447576f4b84337aba44a9f97d3",
+      "class_counts": {
+        "0": 780,
+        "1": 779,
+        "2": 780,
+        "3": 719,
+        "4": 780,
+        "5": 720,
+        "6": 720,
+        "7": 778,
+        "8": 719,
+        "9": 719
+      }
+    },
+    "pendigits.tes": {
+      "n": 3498,
+      "sha256": "8bd03229c5c5291fefe43e45465dd948d2645bf23328b9d993e0b777666b2015",
+      "class_counts": {
+        "0": 363,
+        "1": 364,
+        "2": 364,
+        "3": 336,
+        "4": 364,
+        "5": 335,
+        "6": 336,
+        "7": 364,
+        "8": 336,
+        "9": 336
+      }
+    }
+  }
+}

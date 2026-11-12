@@ -1,0 +1,51 @@
+{
+  "dataset": "UCI PenDigits original writer-disjoint train/test",
+  "protocol": "2-class stage A (digits 0/1), stage B (2/3); global output evaluation",
+  "model": "one trainable 101x16 matrix per output class, no hidden layers",
+  "mode": "joint",
+  "seed": 42,
+  "epochs": 30,
+  "lr": 0.01,
+  "num_parameters": 6468,
+  "stages": [
+    {
+      "stage": "joint",
+      "global_AB": {
+        "accuracy": 0.9201121233356693,
+        "n": 1427,
+        "per_class_accuracy": {
+          "0": 0.9476584022038568,
+          "1": 0.8241758241758241,
+          "2": 0.9395604395604396,
+          "3": 0.9732142857142857
+        },
+        "confusion": [
+          [
+            344,
+            18,
+            1,
+            0
+          ],
+          [
+            0,
+            300,
+            58,
+            6
+          ],
+          [
+            0,
+            20,
+            342,
+            2
+          ],
+          [
+            0,
+            9,
+            0,
+            327
+          ]
+        ]
+      }
+    }
+  ]
+}
