@@ -9,6 +9,9 @@ Two controls sharing the identical class-estimation objective and samples:
                are disjoint.
 - isolated: same angles, origins translated so no class cells overlap.
             Mathematically equal to independent class tables.
+- dummy_axis: add one unused geometric column r=0 at the rotation axis;
+              original position r is stored at geometric r+1. No intersection,
+              no loss of information, no task/class-specific translation.
 
 This code never quantizes or rearranges integer data/axes.  It truly reads
 all class weights from the 3D coordinate store during inference.
@@ -57,6 +60,10 @@ def coordinate(c, v, r, *, mode):
         return (v, origin + dy * r, origin + dz * r)
     if mode == "shared_axis":
         return (v, dy * r, dz * r)
+    if mode == "dummy_axis":
+        # Geometric column 0 is deliberately vacant (not trained / not read).
+        # 16 real feature columns occupy geometric positions 1..16.
+        return (v, dy * (r+1), dz * (r+1))
     raise ValueError(mode)
 
 def materialized_tables(storage, classes, mode):
@@ -130,12 +137,14 @@ def run(mode, output):
     assert overlap_by_stage == (
         [0, VOCAB, VOCAB, VOCAB] if mode == "shared_axis" else [0, 0, 0, 0]
     )
-    if mode == "isolated":
+    if mode in ("isolated", "dummy_axis"):
         for original_table, read_back in zip(
             original,materialized_tables(storage,learned,mode)
         ):
             assert np.array_equal(original_table,read_back)
         assert abs(history[-1]["all_seen_class_accuracy"] - 0.8591450595655221) < 1e-12
+        if mode == "dummy_axis":
+            assert all(coord[1:] != (0,0) for coord in storage)
     else:
         r0 = materialized_tables(storage,learned,mode)
         for W in r0[1:]:
@@ -152,12 +161,15 @@ def run(mode, output):
         "rotation_angles_degrees":ANGLES_DEGREES,
         "row_axis":"integer token index v",
         "column_axis":"position r",
-        "geometry":"(v,r*dy_c,r*dz_c) for shared_axis; isolated also adds (4*L*c,4*L*c) origin",
+        "geometry":"shared_axis: (v,r*dy,r*dz); isolated: translated origin; dummy_axis: (v,(r+1)*dy,(r+1)*dz)",
         "direction_vectors":DIRECTIONS,
         "logp_smoothing_alpha":1.0,
         "scores":"sum of 16 position-specific class log probabilities; global argmax; no task ID",
-        "overlap_semantics":"last newly learned class overwrites shared r=0 axis cells only",
+        "overlap_semantics":"shared_axis overwrites real r=0 weights; dummy_axis leaves geometric r=0 unused (real columns r+1) and has no overlap; isolated translates origins",
         "shared_cells_across_classes":expected_shared if mode=="shared_axis" else 0,
+        "allocated_feature_columns":LENGTH,
+        "geometric_columns_per_class":LENGTH+1 if mode=="dummy_axis" else LENGTH,
+        "unused_geometric_axis_column":0 if mode=="dummy_axis" else None,
         "unique_active_spatial_cells":len(storage),
         "all_stages":history,
         "caveat":"Different from original cross-entropy discriminative baseline. Rotation alone cannot prove transfer."
@@ -173,7 +185,7 @@ def run(mode, output):
 
 if __name__=="__main__":
     p=argparse.ArgumentParser()
-    p.add_argument("--mode",choices=["shared_axis","isolated"],required=True)
+    p.add_argument("--mode",choices=["shared_axis","isolated","dummy_axis"],required=True)
     p.add_argument("--output",default="")
     args=p.parse_args()
     run(args.mode,args.output or f"results/pendigits_45degree_{args.mode}")
