@@ -135,10 +135,9 @@ def main(args):
                 np.asarray([B_labels[0] if y[k]==B_labels[0] else B_labels[1] for k in Btest]),
                 2,B_labels)
         else:
-            result["seen_test"]=get_accuracy(model,X[np.concatenate([
-                Atest, Btest]) if available==4 else X[Atest],
-                y[np.concatenate([Atest,Btest])] if available==4 else y[Atest],
-                available,ORDER)
+            seen_indices=np.concatenate([Atest,Btest]) if available==4 else Atest
+            result["seen_test"]=get_accuracy(
+                model,X[seen_indices],y[seen_indices],available,ORDER)
             result["A_test"]=get_accuracy(model,X[Atest],y[Atest],available,ORDER)
             if available==4:
                 result["B_test"]=get_accuracy(model,X[Btest],y[Btest],available,ORDER)
