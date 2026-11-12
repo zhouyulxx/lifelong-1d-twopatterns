@@ -1,0 +1,90 @@
+{
+  "data": "UCR TwoPatterns",
+  "train_test": "original UCR",
+  "model": "one index-position matrix per binary class, no MLP or head",
+  "weight_shape": [
+    2,
+    64,
+    128
+  ],
+  "num_parameters": 16386,
+  "quantizer": {
+    "kind": "fixed_zscore_bins",
+    "bins": 64,
+    "low": -4.0,
+    "high": 4.0
+  },
+  "class_mapping": {
+    "A": "original classes 0/1 => outputs 0/1",
+    "B": "original classes 2/3 => outputs 0/1"
+  },
+  "epoch_a": 20,
+  "epoch_b": 20,
+  "seed": 42,
+  "lr": 0.01,
+  "batch_size": 64,
+  "metrics": {
+    "A": {
+      "A": {
+        "accuracy": 0.6857282502443792,
+        "count": 2046,
+        "confusion": [
+          [
+            784,
+            251
+          ],
+          [
+            392,
+            619
+          ]
+        ]
+      },
+      "B": {
+        "accuracy": 0.6258955987717503,
+        "count": 1954,
+        "confusion": [
+          [
+            749,
+            246
+          ],
+          [
+            485,
+            474
+          ]
+        ]
+      }
+    },
+    "B": {
+      "A": {
+        "accuracy": 0.6857282502443792,
+        "count": 2046,
+        "confusion": [
+          [
+            613,
+            422
+          ],
+          [
+            221,
+            790
+          ]
+        ]
+      },
+      "B": {
+        "accuracy": 0.7139201637666326,
+        "count": 1954,
+        "confusion": [
+          [
+            682,
+            313
+          ],
+          [
+            246,
+            713
+          ]
+        ]
+      }
+    }
+  },
+  "forgetting_A_percentage_points": 0.0,
+  "notes": "same two trainable tables continually overwritten; this is task-wise binary (not 4-class class incremental)"
+}
