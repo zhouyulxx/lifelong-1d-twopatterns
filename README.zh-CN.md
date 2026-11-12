@@ -1,3 +1,24 @@
+# 当前主线：PenDigits 真正的 Class-Incremental Learning（2026-11-12）
+
+已从原生整数 EEG 切换到一个更适合极简 Index–Position Class Table 的公开实验任务：**UCI PenDigits**。每条样本是 8 个按顺序排列的整数坐标对 \((x,y)\)，共 16 个整数值、10 个 Class；使用官方 TRAIN / TEST 划分，不量化、不重新制作 TEST。
+
+**标准判别式基线（全局四类，无 Task ID）**：A=数字 0/1，B=数字 2/3。
+- A 学完测 A **97.25%**
+- B-only 测 B **99.57%**；A→B 测 B **99.57%**
+- A→B 再测 A **11.28%**；旧任务遗忘 **85.97 个百分点**
+- A+B 同时训练的联合四分类 **92.01%**
+
+**单类别生成式 Index–Position Matrix**：每新出现一类，从该类正样本拟合 \(101\times16\) 矩阵；推理在所有已见类中全局比较，不提供 Task ID。
+- 单类别初始阶段 closed-set 分类准确率**没有定义/没有意义**；0 vs 未见1 的 OOD AUROC **0.9524**
+- 学会前 2 类时 **96.70%**、前 4 类 **85.91%**、全部 10 类 **82.45%**
+- 3D 90° 旋转、完全隔离的存储布局实测与原独立类矩阵完全等价；这**不说明旋转改善学习或促进迁移**
+- 这两套模型的**目标函数不同**，不能把它们的准确率差直接归因于旋转
+
+[完整中文技术报告](docs/PENDIGITS_TRUE_CLASS_INCREMENTAL_2026-11-12.zh-CN.md) · [官方整数数据验证](data/pendigits/SOURCE.json) · [核心实验代码](run_pendigits_incremental.py) · [标准 A→B 基线结果](results/pendigits_sequential_seed42/metrics.json) · [单类连续学习结果](results/pendigits_generative_seed42/metrics.json)
+
+---
+## 历史实验（供对照）
+
 # 当前最新：3D 旋转晶格最小实验（2026-11-12）
 
 已完成将每个二分类输出类别的一张二维 **整数 Index–Position Matrix** 放入共同的 **3D 晶格**：
