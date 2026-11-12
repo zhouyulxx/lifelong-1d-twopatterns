@@ -1,0 +1,67 @@
+name: PenDigits 45-degree 3D lattice four-class comparison
+on:
+  push:
+    paths:
+      - ".github/workflows/pendigits-45degree.yml"
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  rotate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Validate script and install NumPy
+        run: |
+          python -m py_compile run_pendigits_45degree_lattice.py
+          python -m pip install "numpy>=1.26,<3"
+      - name: Run exact rotated lattice sharing common Row axis
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p results/pendigits_45degree_shared_axis
+          python -u run_pendigits_45degree_lattice.py --mode shared_axis 2>&1 | tee results/pendigits_45degree_shared_axis/train.log
+      - name: Run identical rotation with spatially isolated origins
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p results/pendigits_45degree_isolated
+          python -u run_pendigits_45degree_lattice.py --mode isolated 2>&1 | tee results/pendigits_45degree_isolated/train.log
+      - name: Assert comparison is genuinely controlled
+        run: |
+          python - <<'PY'
+          import json
+          a=json.load(open("results/pendigits_45degree_shared_axis/metrics.json"))
+          b=json.load(open("results/pendigits_45degree_isolated/metrics.json"))
+          assert a["rotation_angles_degrees"] == [0,45,90,135]
+          assert b["rotation_angles_degrees"] == [0,45,90,135]
+          assert a["shared_cells_across_classes"] == 303
+          assert b["shared_cells_across_classes"] == 0
+          assert b["all_stages"][-1]["all_seen_class_accuracy"] > .85
+          print("Validated shared/intersection geometry and control")
+          print("Shared 4-way:",a["all_stages"][-1]["all_seen_class_accuracy"])
+          print("Isolated 4-way:",b["all_stages"][-1]["all_seen_class_accuracy"])
+          PY
+      - name: Upload raw metrics and training logs
+        uses: actions/upload-artifact@v4
+        with:
+          name: pendigits-45degree-four-class-comparison
+          path: |
+            results/pendigits_45degree_shared_axis/
+            results/pendigits_45degree_isolated/
+          retention-days: 30
+      - name: Commit measured metrics
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f results/pendigits_45degree_shared_axis/*.json results/pendigits_45degree_shared_axis/*.csv
+          git add -f results/pendigits_45degree_isolated/*.json results/pendigits_45degree_isolated/*.csv
+          git commit -m "results: compare 45-degree rotated shared-row versus isolated lattice"
+          git pull --rebase origin main
+          git push origin HEAD:main
