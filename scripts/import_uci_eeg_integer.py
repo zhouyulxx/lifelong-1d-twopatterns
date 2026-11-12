@@ -14,8 +14,9 @@ from pathlib import Path
 from urllib.request import Request, urlopen
 
 URLS=[
- "https://archive.ics.uci.edu/ml/machine-learning-databases/00388/data.csv",
- "https://archive.ics.uci.edu/static/public/388/data.csv",
+ "https://raw.githubusercontent.com/marakaspers/seizure-prediction/master/Epileptic_Seizure_Recognition.csv",
+ "https://raw.githubusercontent.com/marakaspers/seizure-prediction/main/Epileptic_Seizure_Recognition.csv",
+ "https://raw.githubusercontent.com/QiuyiWu/Epileptic-Seizure-Recognition-Data/master/A%26B%26C%26D%26E.csv",
 ]
 OUT=Path("data/eeg_integer")
 OUT.mkdir(parents=True,exist_ok=True)
@@ -59,7 +60,7 @@ def main():
             if maxv is None or val>maxv:maxv=val
     meta={
         "dataset":"UCI Epileptic Seizure Recognition (id 388)",
-        "source":url,"sha256":hashlib.sha256(raw).hexdigest(),
+        "source":url,"original_catalog":"https://archive.ics.uci.edu/dataset/388/epileptic+seizure+recognition","source_is_public_mirror":True,"sha256":hashlib.sha256(raw).hexdigest(),
         "source_format":"CSV with X1..X178 signals and y labels",
         "n_sequences":n,"sequence_length":178,
         "class_counts":dict(sorted(classes.items())),
