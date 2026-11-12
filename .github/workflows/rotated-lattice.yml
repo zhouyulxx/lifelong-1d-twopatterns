@@ -1,0 +1,85 @@
+name: 3D Rotated Lattice A-B-A - overlap vs isolation
+on:
+  push:
+    paths:
+      - ".github/workflows/rotated-lattice.yml"
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  experiment:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install CPU libraries
+        run: |
+          python -m pip install "numpy>=1.26,<3"
+          python -m pip install "torch>=2.2" --index-url https://download.pytorch.org/whl/cpu
+      - name: Verify spatial rotation coordinates and no cross-class collisions
+        run: |
+          python - <<'PY'
+          from run_rotated_3d_lattice import RotatedLattice
+          for mode in ["intersection","isolated"]:
+              m=5
+              model=RotatedLattice(vocab_size=2,window=m,mode=mode)
+              model.register_plane("A",[0,1])
+              model.register_plane("B",[0,1])
+              expected=4 if mode=="intersection" else 0
+              assert model.shared_coordinates()==expected, (mode,model.shared_coordinates(),expected)
+              for v in range(2):
+                  for c in range(2):
+                      for r in range(m):
+                          a=model._coordinate("A",c,v,r)
+                          b=model._coordinate("B",c,v,r)
+                          if r==0 and mode=="intersection":assert a==b
+                          elif mode=="isolated":assert a!=b
+              print(mode,"shared coordinates:",model.shared_coordinates(),
+                    "stored spatial cells:",model.lattice.num_embeddings)
+          PY
+      - name: Train true 90-degree rotation with shared intersection line
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p results/rotated_lattice_intersection_seed42
+          python -u run_rotated_3d_lattice.py --seed 42 --mode intersection --epochs-a 20 --epochs-b 20 --lr .005 2>&1 | tee results/rotated_lattice_intersection_seed42/train.log
+      - name: Train rotated but translated disjoint-plane control
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p results/rotated_lattice_isolated_seed42
+          python -u run_rotated_3d_lattice.py --seed 42 --mode isolated --epochs-a 20 --epochs-b 20 --lr .005 2>&1 | tee results/rotated_lattice_isolated_seed42/train.log
+      - name: Verify isolated Task A cannot change after B
+        run: |
+          python - <<'PY'
+          import json
+          x=json.load(open("results/rotated_lattice_isolated_seed42/metrics.json"))
+          a=x["metrics"]["A"]["A"]["confusion"]
+          b=x["metrics"]["B"]["A"]["confusion"]
+          assert a==b,(a,b)
+          assert x["geometry"]["shared_coordinate_count"]==0
+          print("Isolation check PASS: Task A confusion unchanged:",a)
+          PY
+      - name: Upload full checkpoints and logs
+        uses: actions/upload-artifact@v4
+        with:
+          name: lattice-3d-rotated-intersection-versus-isolated-seed42
+          path: |
+            results/rotated_lattice_intersection_seed42/
+            results/rotated_lattice_isolated_seed42/
+          retention-days: 30
+      - name: Publish measured results into repository
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f results/rotated_lattice_intersection_seed42/metrics.json results/rotated_lattice_intersection_seed42/*.csv results/rotated_lattice_intersection_seed42/train.log
+          git add -f results/rotated_lattice_isolated_seed42/metrics.json results/rotated_lattice_isolated_seed42/*.csv results/rotated_lattice_isolated_seed42/train.log
+          if git diff --cached --quiet; then echo "No changes"; else
+            git commit -m "results: compare 3D rotated lattice overlap and isolation A-B-A"
+            git push origin HEAD:main
+          fi
