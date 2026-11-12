@@ -1,0 +1,49 @@
+Task A original labels=(1, 5) train=3680 test=920
+Task B original labels=(2, 4) train=3680 test=920
+Stage A vocabulary size=3227
+Task A: epoch 1/20, loss=0.51745
+Task A: epoch 2/20, loss=0.31731
+Task A: epoch 3/20, loss=0.24746
+Task A: epoch 4/20, loss=0.21747
+Task A: epoch 5/20, loss=0.20069
+Task A: epoch 6/20, loss=0.18993
+Task A: epoch 7/20, loss=0.18224
+Task A: epoch 8/20, loss=0.17637
+Task A: epoch 9/20, loss=0.17172
+Task A: epoch 10/20, loss=0.16803
+Task A: epoch 11/20, loss=0.16481
+Task A: epoch 12/20, loss=0.16213
+Task A: epoch 13/20, loss=0.15986
+Task A: epoch 14/20, loss=0.15794
+Task A: epoch 15/20, loss=0.15609
+Task A: epoch 16/20, loss=0.15448
+Task A: epoch 17/20, loss=0.15317
+Task A: epoch 18/20, loss=0.15186
+Task A: epoch 19/20, loss=0.15069
+Task A: epoch 20/20, loss=0.14964
+After A, test A: accuracy=97.1739%; OOV=0.0452%
+After A, test B: accuracy=48.4783%; OOV=0.0195%
+Stage B added 41 integer values, total vocab=3268
+Task B: epoch 1/20, loss=1.19837
+Task B: epoch 2/20, loss=0.92025
+Task B: epoch 3/20, loss=0.79808
+Task B: epoch 4/20, loss=0.73936
+Task B: epoch 5/20, loss=0.70717
+Task B: epoch 6/20, loss=0.68828
+Task B: epoch 7/20, loss=0.67639
+Task B: epoch 8/20, loss=0.66887
+Task B: epoch 9/20, loss=0.66402
+Task B: epoch 10/20, loss=0.66076
+Task B: epoch 11/20, loss=0.65884
+Task B: epoch 12/20, loss=0.65677
+Task B: epoch 13/20, loss=0.65536
+Task B: epoch 14/20, loss=0.65447
+Task B: epoch 15/20, loss=0.65384
+Task B: epoch 16/20, loss=0.65299
+Task B: epoch 17/20, loss=0.65247
+Task B: epoch 18/20, loss=0.65167
+Task B: epoch 19/20, loss=0.65136
+Task B: epoch 20/20, loss=0.65099
+After B, test A: accuracy=61.9565%; OOV=0.0427%
+After B, test B: accuracy=67.1739%; OOV=0.0189%
+FORGETTING A: 35.2174 percentage points
